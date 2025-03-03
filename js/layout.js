@@ -2,7 +2,7 @@ let divElm = document.createElement("div");
 divElm.id = "root";
 divElm.innerHTML = `
     <header>
-        <h1>TMDB API</h1>
+        <h1>MyMovies</h1>
     </header>
     
     <main>

@@ -1,9 +1,30 @@
-.movies-container {
+* {
+  margin: 0 auto;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.popular-container {
+  display: flex;
+  flex-direction: column;
+  margin: 1em;
+  gap: 2em;
+}
+.popular-container article {
+  margin: 0;
+}
+.popular-container img {
+  border-radius: 20px;
+  height: auto;
+  width: 85px;
+}
+
+.now-showing-container {
   display: flex;
   margin: 1em;
   gap: 2em;
 }
-.movies-container article img {
+.now-showing-container article img {
   border-radius: 20px;
   height: auto;
   width: 143px;
