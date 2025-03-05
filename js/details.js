@@ -19,10 +19,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const genres = movieDetails.genres.map(genre => `<span class="genre">${genre.name}</span>`).join(" ");
         detailsSection.innerHTML = `
           <img src="https://image.tmdb.org/t/p/w500${movieDetails.poster_path}" alt="${movieDetails.title}" class="detailMovie-img"/>
-            <h3>${movieDetails.title}</h3>
+            <h3 class="details-title">${movieDetails.title}</h3>
             <p class="popular-genre">${genres}</p>
-            <h3>Description</h3>
-            <p>${movieDetails.overview}</p>
+            <h3 class="details-title">Description</h3>
+            <p class="details-overview">${movieDetails.overview}</p>
         `;
 
         return detailsSection;
@@ -77,8 +77,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     const castSection = document.createElement("section");
                     const castTitle = document.createElement("h3");
                     castTitle.textContent = "Cast";
+                    castTitle.classList = "details-title";
                     castSection.appendChild(castTitle);
-
+                    
                     const castList = document.createElement("ul");
                     castData.cast.forEach(actor => {
                         const castItem = document.createElement("li");
@@ -86,7 +87,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         castItem.innerHTML = `
                             <img src="${actorImage}" alt="${actor.name}" class="actor-img"/>
                             <strong>${actor.name}</strong>
-                        `;
+                            `;
                         castList.appendChild(castItem);
                     });
 
@@ -97,16 +98,14 @@ document.addEventListener('DOMContentLoaded', () => {
                     localStorage.setItem(`movieDetails_${movieId}`, JSON.stringify(movieDetails));
                     localStorage.setItem(`movieCast_${movieId}`, JSON.stringify(castData));
                     
-                    castSection.style.maxHeight = "375px";
-                    castSection.style.overflowX = "scroll";
                     // Append the details section to the page
                     document.querySelector("main").appendChild(detailsSection);
                 })
                 .catch(err => console.error("Error fetching cast data:", err));
-        })
-        .catch(err => {
-            console.log("Error fetching movie details:", err);
-        });
-
+            })
+            .catch(err => {
+                console.log("Error fetching movie details:", err);
+            });
+            
     }
 });

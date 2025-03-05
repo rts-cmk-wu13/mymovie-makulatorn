@@ -1,20 +1,26 @@
 @use '../styling/base'
 
 *
-    margin: 0 auto
-    padding: 0
-    box-sizing: border-box
+   @include base.star
 
 body
     margin: 24px
+    font-family: Merriweather
 
-a
+a, li, button
     @include base.noDeco
 
 header
     display: flex
     margin: 10px 0px 10px 0px
-    
+
+footer
+    @include base.slide-side
+    .icon-save, .icon-ticket
+        font-size: 24px
+    .icon-bookmark
+        font-size: 40px
+        padding-top: 10px
 .index-title
     font-size: 16pt
 
@@ -35,8 +41,9 @@ header
             width: 143px
 
 .actor-img
-    height: auto
-    width: 72px
+    height: 76px
+    width: auto
+    border-radius: 10px
 
 .detailMovie-img
     height: auto
@@ -56,4 +63,10 @@ header
 
 .cast-list
     @include base.slide-side
+    max-width: 375px
+    overflow-x: scroll
+    padding-bottom: 10px
 
+.details-title
+    margin: 10px 0px 10px 0px
+    color: blue

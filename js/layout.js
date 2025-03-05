@@ -14,6 +14,10 @@ divElm.innerHTML = `
 
     </main>
 
-    <footer>Created 2025</footer>
+    <footer>
+        <button class="icon-bookmark"></button>
+        <button class="icon-ticket"></button>
+        <button class="icon-save"></button>
+    </footer>
 `;
 document.querySelector("body").append(divElm);

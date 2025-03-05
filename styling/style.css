@@ -1,3 +1,7 @@
+@font-face {
+  font-family: Merriweather;
+  src: url(/font/Poppins/Poppins-Regular.ttf);
+}
 * {
   margin: 0 auto;
   padding: 0;
@@ -6,17 +10,33 @@
 
 body {
   margin: 24px;
+  font-family: Merriweather;
 }
 
-a {
+a, li, button {
   text-decoration: none;
   color: black;
   cursor: pointer;
+  list-style: none;
+  border: none;
+  background-color: white;
 }
 
 header {
   display: flex;
   margin: 10px 0px 10px 0px;
+}
+
+footer {
+  display: flex;
+  gap: 2em;
+}
+footer .icon-save, footer .icon-ticket {
+  font-size: 24px;
+}
+footer .icon-bookmark {
+  font-size: 40px;
+  padding-top: 10px;
 }
 
 .index-title {
@@ -48,8 +68,9 @@ header {
 }
 
 .actor-img {
-  height: auto;
-  width: 72px;
+  height: 76px;
+  width: auto;
+  border-radius: 10px;
 }
 
 .detailMovie-img {
@@ -75,4 +96,12 @@ header {
 .cast-list {
   display: flex;
   gap: 2em;
+  max-width: 375px;
+  overflow-x: scroll;
+  padding-bottom: 10px;
+}
+
+.details-title {
+  margin: 10px 0px 10px 0px;
+  color: blue;
 }/*# sourceMappingURL=style.css.map */
