@@ -4,10 +4,28 @@
   box-sizing: border-box;
 }
 
+body {
+  margin: 24px;
+}
+
+a {
+  text-decoration: none;
+  color: black;
+  cursor: pointer;
+}
+
+header {
+  display: flex;
+  margin: 10px 0px 10px 0px;
+}
+
+.index-title {
+  font-size: 16pt;
+}
+
 .popular-container {
   display: flex;
   flex-direction: column;
-  margin: 1em;
   gap: 2em;
 }
 .popular-container article {
@@ -21,11 +39,40 @@
 
 .now-showing-container {
   display: flex;
-  margin: 1em;
   gap: 2em;
 }
 .now-showing-container article img {
   border-radius: 20px;
   height: auto;
   width: 143px;
+}
+
+.actor-img {
+  height: auto;
+  width: 72px;
+}
+
+.detailMovie-img {
+  height: auto;
+  width: 375px;
+}
+
+.genre {
+  background-color: #DBE3FF;
+  border-radius: 100px;
+  color: #88A4E8;
+  padding: 4px 12px 4px 12px;
+}
+
+.popular-genre {
+  margin: 8px 5px 8px 0px;
+}
+
+.nowShowing-title, .popular-title {
+  padding-bottom: 10px;
+}
+
+.cast-list {
+  display: flex;
+  gap: 2em;
 }/*# sourceMappingURL=style.css.map */

@@ -1,14 +1,25 @@
+@use '../styling/base'
+
 *
     margin: 0 auto
     padding: 0
     box-sizing: border-box
-    
-    
-.popular-container
+
+body
+    margin: 24px
+
+a
+    @include base.noDeco
+
+header
     display: flex
-    flex-direction: column
-    margin: 1em
-    gap: 2em
+    margin: 10px 0px 10px 0px
+    
+.index-title
+    font-size: 16pt
+
+.popular-container
+    @include base.slide
     article
         margin: 0
     img
@@ -16,11 +27,33 @@
         height: auto
         width: 85px
 .now-showing-container
-    display: flex
-    margin: 1em
-    gap: 2em
+    @include base.slide-side
     article
         img
             border-radius: 20px
             height: auto
             width: 143px
+
+.actor-img
+    height: auto
+    width: 72px
+
+.detailMovie-img
+    height: auto
+    width: 375px
+
+.genre
+    background-color: base.$genre_box
+    border-radius: 100px
+    color: base.$genre_txt
+    padding: 4px 12px 4px 12px
+
+.popular-genre
+    margin: 8px 5px 8px 0px
+
+.nowShowing-title, .popular-title
+    padding-bottom: 10px
+
+.cast-list
+    @include base.slide-side
+

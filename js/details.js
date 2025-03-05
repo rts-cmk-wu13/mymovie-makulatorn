@@ -1,7 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Get the movie ID from the URL (e.g., details.html?id=123)
     const urlParams = new URLSearchParams(window.location.search);
-    const movieId = urlParams.get('id');  // Get the 'id' parameter
+    const movieId = urlParams.get('id');  
 
     const options = {
         method: 'GET',
@@ -17,11 +16,11 @@ document.addEventListener('DOMContentLoaded', () => {
         title.textContent = movieDetails.title;
         detailsSection.appendChild(title);
 
-        const genres = movieDetails.genres.map(genre => genre.name).join(", ");
+        const genres = movieDetails.genres.map(genre => `<span class="genre">${genre.name}</span>`).join(" ");
         detailsSection.innerHTML = `
-          <img src="https://image.tmdb.org/t/p/w500${movieDetails.poster_path}" alt="${movieDetails.title}" />
+          <img src="https://image.tmdb.org/t/p/w500${movieDetails.poster_path}" alt="${movieDetails.title}" class="detailMovie-img"/>
             <h3>${movieDetails.title}</h3>
-            <p>${genres}</p>
+            <p class="popular-genre">${genres}</p>
             <h3>Description</h3>
             <p>${movieDetails.overview}</p>
         `;
@@ -44,12 +43,13 @@ document.addEventListener('DOMContentLoaded', () => {
         castSection.appendChild(castTitle);
 
         const castList = document.createElement("ul");
+        castList.classList = "cast-list";
         castData.cast.forEach(actor => {
             const castItem = document.createElement("li");
             const actorImage = actor.profile_path ? `https://image.tmdb.org/t/p/w500${actor.profile_path}` : 'default-profile.jpg';
             castItem.innerHTML = `
-                <img src="${actorImage}" alt="${actor.name}" />
-                <strong>${actor.name}</strong> as ${actor.character}
+                <img src="${actorImage}" alt="${actor.name}" class="actor-img"/>
+                <strong>${actor.name}</strong>
             `;
             castList.appendChild(castItem);
         });
@@ -84,8 +84,8 @@ document.addEventListener('DOMContentLoaded', () => {
                         const castItem = document.createElement("li");
                         const actorImage = actor.profile_path ? `https://image.tmdb.org/t/p/w500${actor.profile_path}` : 'default-profile.jpg';
                         castItem.innerHTML = `
-                            <img src="${actorImage}" alt="${actor.name}" />
-                            <strong>${actor.name}</strong> as ${actor.character}
+                            <img src="${actorImage}" alt="${actor.name}" class="actor-img"/>
+                            <strong>${actor.name}</strong>
                         `;
                         castList.appendChild(castItem);
                     });
@@ -96,7 +96,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     // Cache the movie details and cast data in localStorage
                     localStorage.setItem(`movieDetails_${movieId}`, JSON.stringify(movieDetails));
                     localStorage.setItem(`movieCast_${movieId}`, JSON.stringify(castData));
-
+                    
+                    castSection.style.maxHeight = "375px";
+                    castSection.style.overflowX = "scroll";
                     // Append the details section to the page
                     document.querySelector("main").appendChild(detailsSection);
                 })
@@ -105,5 +107,6 @@ document.addEventListener('DOMContentLoaded', () => {
         .catch(err => {
             console.log("Error fetching movie details:", err);
         });
-}
+
+    }
 });

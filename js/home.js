@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const nowShowing = document.createElement("section");
         const nowShowingTitle = document.createElement("h2");
         nowShowingTitle.textContent = "Now Showing";
+        nowShowingTitle.classList = "nowShowing-title";
         nowShowing.appendChild(nowShowingTitle);
     
         const nowShowingArticleCon = document.createElement("div");
@@ -54,6 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const popular = document.createElement("section");
         const popularTitle = document.createElement("h2");
         popularTitle.textContent = "Popular";
+        popularTitle.classList = "popular-title";
         popular.appendChild(popularTitle);
     
         const popularArticleCon = document.createElement("div");
@@ -90,14 +92,14 @@ document.addEventListener('DOMContentLoaded', () => {
                         const hours = Math.floor(runtime / 60);
                         const minutes = runtime % 60;
                         const runtimeFormatted = runtime !== "N/A" ? `${hours} hr ${minutes} m` : "N/A";
-                        const genres = movieDetails.genres.map(genre => genre.name).join(", ");
+                        const genres = movieDetails.genres.map(genre => `<span class="genre">${genre.name}</span>`).join(" ");
                         popularArticle.innerHTML = `
                             <a href="details.html?id=${movie.id}">
                                 <img src="https://image.tmdb.org/t/p/w500${movie.poster_path}" alt="${movie.title}" />
                                 <h3>${movie.title}</h3>
+                            </a>
                                 <p class="popular-genre">${genres}</p>
                                 <p>${runtimeFormatted}</p>
-                            </a>
                         `;
                         popularArticleCon.appendChild(popularArticle);
                     })
