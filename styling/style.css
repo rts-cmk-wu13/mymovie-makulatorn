@@ -39,7 +39,7 @@ footer .icon-bookmark {
   padding-top: 10px;
 }
 
-.index-title {
+#index-title {
   font-size: 16pt;
 }
 
@@ -103,5 +103,5 @@ footer .icon-bookmark {
 
 .details-title {
   margin: 10px 0px 10px 0px;
-  color: blue;
+  color: #110E47;
 }/*# sourceMappingURL=style.css.map */

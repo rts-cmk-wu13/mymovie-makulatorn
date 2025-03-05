@@ -40,6 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const castSection = document.createElement("section");
         const castTitle = document.createElement("h3");
         castTitle.textContent = "Cast";
+        castTitle.classList = "details-title";
         castSection.appendChild(castTitle);
 
         const castList = document.createElement("ul");
@@ -66,14 +67,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Render the movie details
             const detailsSection = renderMovieDetails(movieDetails);
-
+            
             // Fetch cast data
             fetch(`https://api.themoviedb.org/3/movie/${movieId}/credits`, options)
-                .then(castRes => castRes.json())
-                .then(castData => {
-                    console.log(castData);
-
-                    // Render cast data
+            .then(castRes => castRes.json())
+            .then(castData => {
+                console.log(castData);
+                
+                // Render cast data
                     const castSection = document.createElement("section");
                     const castTitle = document.createElement("h3");
                     castTitle.textContent = "Cast";
@@ -90,7 +91,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             `;
                         castList.appendChild(castItem);
                     });
-
+                    
                     castSection.appendChild(castList);
                     detailsSection.appendChild(castSection);
 
