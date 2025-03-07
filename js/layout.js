@@ -5,7 +5,7 @@ divElm.innerHTML = `
         <img src="img/Union.svg" alt="menu icon"/>
         <h1 class="details-title" id="index-title">MyMovies</h1>
         <label class="switch">
-            <input type="checkbox">
+            <input type="checkbox" onclick="darkMode()">
             <span class="slider round"></span>
         </label>
     </header>

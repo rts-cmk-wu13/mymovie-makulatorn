@@ -7,151 +7,124 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
     
-    const nowShowing = document.createElement("section");
-    const nowShowingTitle = document.createElement("h2");
-    nowShowingTitle.textContent = "Now Showing";
-    nowShowingTitle.classList = "details-title";
-    nowShowing.appendChild(nowShowingTitle);
+        const nowShowing = document.createElement("section");
+        const nowShowingTitle = document.createElement("h2");
+        nowShowingTitle.textContent = "Now Showing";
+        nowShowingTitle.classList = "details-title";
+        nowShowing.appendChild(nowShowingTitle);
     
-    const nowShowingArticleCon = document.createElement("div");
-    nowShowingArticleCon.classList.add("now-showing-container");
+        const nowShowingArticleCon = document.createElement("div");
+        nowShowingArticleCon.classList.add("now-showing-container");
+    
+        // Check if data is cached
+        const cachedNowShowing = localStorage.getItem('nowShowingData');
+        if (cachedNowShowing) {
+            const res = JSON.parse(cachedNowShowing);
+            renderNowShowingMovies(res);
 
-    // Check if data is cached
-    const cachedNowShowing = localStorage.getItem('nowShowingData');
-    if (cachedNowShowing) {
-        const res = JSON.parse(cachedNowShowing);
-        renderNowShowingMovies(res);
-
-    } else {
-        fetch('https://api.themoviedb.org/3/movie/now_playing', options)
-            .then(res => res.json())
-            .then(res => {
-                if (res && res.results && res.results.length > 0) {
-                    //cache data
-                    localStorage.setItem('nowShowingData', JSON.stringify(res));
-                    renderNowShowingMovies(res);
-                } else {
-                    nowShowing.innerHTML += "<p>No movies available at the moment.</p>";
-                }
-            })
-            .catch(err => console.error("Error fetching data", err));
-    }
-
-    function renderNowShowingMovies(res) {
-        res.results.forEach(movie => {
-            const articleElm = document.createElement("article");
-
-            // Fetch IMDb ID for each movie using Movie External IDs
-            fetch(`https://api.themoviedb.org/3/movie/${movie.id}/external_ids`, options)
-                .then(extRes => extRes.json())
-                .then(extData => {
-                    const imdbID = extData.imdb_id;
-
-                    // Fetch IMDb Rating from OMDB API
-                    if (imdbID) {
-                        fetch(`http://www.omdbapi.com/?i=${imdbID}&apikey=YOUR_OMDB_API_KEY`)
-                            .then(ratingRes => ratingRes.json())
-                            .then(ratingData => {
-                                const imdbRating = ratingData.imdbRating ? ratingData.imdbRating : "N/A";
-
-                                articleElm.innerHTML = `
-                                    <a href="details.html?id=${movie.id}">
-                                        <img src="https://image.tmdb.org/t/p/w500${movie.poster_path}" alt="${movie.title}" />
-                                        <h3>${movie.title}</h3>
-                                    </a>
-                                    <p class="imdb-rating">IMDb Rating: ${imdbRating}</p>
-                                `;
-                                nowShowingArticleCon.appendChild(articleElm);
-                            })
-                            .catch(err => console.error("Error fetching IMDb rating", err));
+            //if not, fetch
+        } else {
+            fetch('https://api.themoviedb.org/3/movie/now_playing', options)
+                .then(res => res.json())
+                .then(res => {
+                    if (res && res.results && res.results.length > 0) {
+                        //cache data
+                        localStorage.setItem('nowShowingData', JSON.stringify(res));
+                        renderNowShowingMovies(res);
+                    } else {
+                        nowShowing.innerHTML += "<p>No movies available at the moment.</p>";
                     }
                 })
-                .catch(err => console.error("Error fetching external IDs", err));
-        });
-        nowShowing.appendChild(nowShowingArticleCon);
-    }
-
-    const popular = document.createElement("section");
-    const popularTitle = document.createElement("h2");
-    popularTitle.textContent = "Popular";
-    popularTitle.classList = "details-title";
-    popular.appendChild(popularTitle);
-
-    const popularArticleCon = document.createElement("div");
-    popularArticleCon.classList.add("popular-container");
-
-    // Check if data is cached
-    const cachedPopular = localStorage.getItem('popularData');
-    if (cachedPopular) {
-        const res = JSON.parse(cachedPopular);
-        renderPopularMovies(res);
-    } else {
-        fetch('https://api.themoviedb.org/3/movie/popular', options)
-            .then(res => res.json())
-            .then(res => {
-                if (res && res.results && res.results.length > 0) {
-                    //cache data
-                    localStorage.setItem('popularData', JSON.stringify(res));
-                    renderPopularMovies(res);
-                } else {
-                    popular.innerHTML += "<p>No movies available at the moment.</p>";
-                }
-            })
-            .catch(err => console.error("Error fetching data", err));
-    }
-
-    function renderPopularMovies(res) {
-        res.results.forEach(movie => {
-            fetch(`https://api.themoviedb.org/3/movie/${movie.id}`, options)
-                .then(detailRes => detailRes.json())
-                .then(movieDetails => {
-                    const popularArticle = document.createElement("article");
-                    const runtime = movieDetails.runtime ? movieDetails.runtime : "N/A";
-                    const hours = Math.floor(runtime / 60);
-                    const minutes = runtime % 60;
-                    const runtimeFormatted = runtime !== "N/A" ? `${hours} hr ${minutes} m` : "N/A";
-                    const genres = movieDetails.genres.map(genre => `<span class="genre">${genre.name}</span>`).join(" ");
-
-                    // Fetch IMDb ID and rating for popular movie
-                    fetch(`https://api.themoviedb.org/3/movie/${movie.id}/external_ids`, options)
-                        .then(extRes => extRes.json())
-                        .then(extData => {
-                            const imdbID = extData.imdb_id;
-
-                            // Fetch IMDb Rating from OMDB API
-                            if (imdbID) {
-                                fetch(`http://www.omdbapi.com/?i=${imdbID}&apikey=YOUR_OMDB_API_KEY`)
-                                    .then(ratingRes => ratingRes.json())
-                                    .then(ratingData => {
-                                        const imdbRating = ratingData.imdbRating ? ratingData.imdbRating : "N/A";
-                                        
-                                        popularArticle.innerHTML = `
-                                            <a href="details.html?id=${movie.id}">
-                                                <img src="https://image.tmdb.org/t/p/w500${movie.poster_path}" alt="${movie.title}" />
-                                                <h3>${movie.title}</h3>
-                                            </a>
-                                            <p class="popular-genre">${genres}</p>
-                                            <p>${runtimeFormatted}</p>
-                                            <p class="imdb-rating">IMDb Rating: ${imdbRating}</p>
-                                        `;
-                                        popularArticleCon.appendChild(popularArticle);
-                                    })
-                                    .catch(err => console.error("Error fetching IMDb rating", err));
-                            }
-                        })
-                        .catch(err => console.error("Error fetching external IDs", err));
+                .catch(err => console.error("Error fetching data", err));
+        }
+    
+        function renderNowShowingMovies(res) {
+            res.results.forEach(movie => {
+                const articleElm = document.createElement("article");
+                articleElm.innerHTML = `
+                    <a href="details.html?id=${movie.id}">
+                        <img src="https://image.tmdb.org/t/p/w500${movie.poster_path}" alt="${movie.title}" />
+                        <h3>${movie.title}</h3>
+                    </a>
+                `;
+                nowShowingArticleCon.appendChild(articleElm);
+            });
+            nowShowing.appendChild(nowShowingArticleCon);
+        }
+    
+        const popular = document.createElement("section");
+        const popularTitle = document.createElement("h2");
+        popularTitle.textContent = "Popular";
+        popularTitle.classList = "details-title";
+        popular.appendChild(popularTitle);
+    
+        const popularArticleCon = document.createElement("div");
+        popularArticleCon.classList.add("popular-container");
+    
+        // Check if data is cached
+        const cachedPopular = localStorage.getItem('popularData');
+        if (cachedPopular) {
+            const res = JSON.parse(cachedPopular);
+            renderPopularMovies(res);
+            //if not, fetch
+        } else {
+            fetch('https://api.themoviedb.org/3/movie/popular', options)
+                .then(res => res.json())
+                .then(res => {
+                    if (res && res.results && res.results.length > 0) {
+                        //cache data
+                        localStorage.setItem('popularData', JSON.stringify(res));
+                        renderPopularMovies(res);
+                    } else {
+                        popular.innerHTML += "<p>No movies available at the moment.</p>";
+                    }
                 })
-                .catch(err => console.error("Error fetching movie details", err));
-        });
-        popular.appendChild(popularArticleCon);
+                .catch(err => console.error("Error fetching data", err));
+        }
+    
+        function renderPopularMovies(res) {
+            res.results.forEach(movie => {
+                fetch(`https://api.themoviedb.org/3/movie/${movie.id}`, options)
+                    .then(detailRes => detailRes.json())
+                    .then(movieDetails => {
+                        const popularArticle = document.createElement("article");
+                        const runtime = movieDetails.runtime ? movieDetails.runtime : "N/A";
+                        const hours = Math.floor(runtime / 60);
+                        const minutes = runtime % 60;
+                        const runtimeFormatted = runtime !== "N/A" ? `${hours} hr ${minutes} m` : "N/A";
+                        const genres = movieDetails.genres.map(genre => `<span class="genre">${genre.name}</span>`).join(" ");
+                        
+                        popularArticle.innerHTML = `
+                            <a href="details.html?id=${movie.id}">
+                                <img src="https://image.tmdb.org/t/p/w500${movie.poster_path}" alt="${movie.title}" />
+                                <h3>${movie.title}</h3>
+                            </a>
+                                <p class="popular-genre">${genres}</p>
+                                <p>${runtimeFormatted}</p>
+                        `;
+                        popularArticleCon.appendChild(popularArticle);
+                    })
+                    .catch(err => console.error("Error fetching movie details", err));
+            });
+            popular.appendChild(popularArticleCon);
+        }
+        popularArticleCon.style.maxHeight = "327px"; 
+        popularArticleCon.style.overflowX = "scroll"; 
+        nowShowingArticleCon.style.maxWidth = "100%"; 
+        nowShowingArticleCon.style.overflowY = "scroll"; 
+        
+        const mainContainer = document.querySelector("main");
+        mainContainer.appendChild(nowShowing);
+        mainContainer.appendChild(popular);
+    });
+    function darkMode(){
+        var bodyElm = document.body;
+        bodyElm.classList.toggle("dark-mode");
+        
+        var txtElm = document.querySelectorAll('p, h1, h2, h3');
+        txtElm.forEach(function(txt){
+            txt.classList.toggle("dark-mode");
+        })
     }
 
-    popularArticleCon.style.maxHeight = "327px"; 
-    popularArticleCon.style.overflowX = "scroll"; 
-    nowShowingArticleCon.style.maxWidth = "100%"; 
-    nowShowingArticleCon.style.overflowY = "scroll"; 
-
-    const mainContainer = document.querySelector("main");
-    mainContainer.appendChild(nowShowing);
-    mainContainer.appendChild(popular);
-});
+    
