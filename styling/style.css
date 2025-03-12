@@ -13,8 +13,35 @@ body {
   font-family: Merriweather;
 }
 
-.dark-mode {
+p, h1, h2, h3, .details-title {
+  color: black;
+}
+
+/* Dark Mode */
+body.dark-mode {
   background-color: #15141F;
+  color: white;
+}
+
+.dark-mode p, .dark-mode h1, .dark-mode h2, .dark-mode h3 {
+  color: white;
+}
+
+.dark-mode .details-title {
+  color: white;
+}
+
+.dark-mode button {
+  background-color: #15141F;
+  color: white;
+}
+
+.dark-mode img.menu-icon {
+  background-color: blue;
+  color: blue;
+}
+
+.dark-mode article {
   color: white;
 }
 
@@ -27,6 +54,20 @@ a, li, button {
   background-color: white;
 }
 
+a {
+  margin-left: 0;
+  margin-right: 10px;
+  background: rgba(0, 0, 0, 0);
+}
+
+p {
+  margin-left: 0;
+}
+
+.genre-con {
+  margin: 1em;
+}
+
 header {
   display: flex;
   margin: 10px 0px 10px 0px;
@@ -35,6 +76,9 @@ header {
 footer {
   display: flex;
   gap: 2em;
+  max-width: 100%;
+  overflow-x: scroll;
+  padding: 10px;
 }
 footer .icon-save, footer .icon-ticket {
   font-size: 24px;
@@ -52,6 +96,8 @@ footer .icon-bookmark {
   display: flex;
   flex-direction: column;
   gap: 2em;
+  max-height: 327px;
+  overflow-x: scroll;
 }
 .popular-container article {
   margin: 0;
@@ -65,6 +111,9 @@ footer .icon-bookmark {
 .now-showing-container {
   display: flex;
   gap: 2em;
+  max-width: 100%;
+  overflow-x: scroll;
+  padding: 10px;
 }
 .now-showing-container article img {
   border-radius: 20px;
@@ -80,18 +129,39 @@ footer .icon-bookmark {
 
 .detailMovie-img {
   height: auto;
+  width: 100%;
+}
+
+.detailMovie-img-con {
+  height: 300px;
   width: 375px;
+  overflow: hidden;
+}
+
+.details-con {
+  border-radius: 20px 20px 0px 0px;
+}
+
+.home-movie-details {
+  display: flex;
+  flex-direction: column;
+  margin-left: 10px;
 }
 
 .genre {
   background-color: #DBE3FF;
   border-radius: 100px;
   color: #88A4E8;
-  padding: 4px 12px 4px 12px;
+  padding: 3px;
+  margin: 8px;
 }
 
 .popular-genre {
   margin: 8px 5px 8px 0px;
+}
+
+.popular-list {
+  display: flex;
 }
 
 .nowShowing-title, .popular-title {
@@ -101,12 +171,28 @@ footer .icon-bookmark {
 .cast-list {
   display: flex;
   gap: 2em;
+  max-width: 100%;
+  overflow-x: scroll;
+  padding: 10px;
   max-width: 375px;
   overflow-x: scroll;
   padding-bottom: 10px;
 }
 
+.details-info-container {
+  display: flex;
+  margin: 10px;
+}
+
+.details-info-title {
+  color: #9C9C9C;
+}
+
+.icon-menu {
+  font-size: 30px;
+}
+
 .details-title {
-  margin: 10px 0px 10px 0px;
-  color: #110E47;
+  margin-left: 0;
+  margin: 24px 0px 10px 0px;
 }/*# sourceMappingURL=style.css.map */
