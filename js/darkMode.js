@@ -1,5 +1,5 @@
 function darkMode() {
-    var bodyElm = document.body;
+    var bodyElm = document.querySelector("body");
     bodyElm.classList.toggle("dark-mode");
 
     var isDarkMode = bodyElm.classList.contains("dark-mode");
@@ -8,13 +8,13 @@ function darkMode() {
 }
 
 function applyDarkMode() {
-    var bodyElm = document.body;
+    var bodyElm = document.querySelector("body");
     var savedDarkMode = localStorage.getItem("darkMode") === "true";
 
     if (savedDarkMode) {
         bodyElm.classList.add("dark-mode");
     }
-    var sectionElm = document.querySelectorAll('section, article');
+    var sectionElm = document.querySelectorAll('body');
     sectionElm.forEach(function(section){
         section.classList.add("dark-mode");
     });

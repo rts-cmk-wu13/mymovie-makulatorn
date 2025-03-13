@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
+
     const mainContainer = document.querySelector("main");
 
     // Create sections for Now Showing and Popular
@@ -110,6 +111,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // Function to create a movie article for Popular
     function createPopularArticle(movie, movieDetails) {
         const popularArticle = document.createElement("article");
+        popularArticle.classList.add("movie-article");
+
 
         const divContainer = document.createElement("div");
         divContainer.style.display = "flex";
@@ -121,7 +124,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const img = document.createElement("img");
         img.src = `https://image.tmdb.org/t/p/w500${movie.poster_path}`;
         img.alt = `${movie.title}`;
-        
+
         link.appendChild(img);
 
 
@@ -137,7 +140,7 @@ document.addEventListener('DOMContentLoaded', () => {
         pRating.textContent = `${rating}/10 IMDb`;
 
         const pGenres = document.createElement("div");
-        movieDetails.genres.forEach(genre =>{
+        movieDetails.genres.forEach(genre => {
             const genreLink = document.createElement("a");
             genreLink.classList.add("genre");
             genreLink.textContent = genre.name;
@@ -162,4 +165,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
         return popularArticle;
     }
+
+
+    const mikkel = make(["div", { className: "hog" }, "mmyellow"]);
+    document.body.appendChild(mikkel)
+
 });
+
+
