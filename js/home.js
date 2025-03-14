@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Function to fetch data and render
     function fetchDataAndRender(container, renderFunction, localStorageKey) {
-        fetch(`https://api.themoviedb.org/3/movie/${container.classList[0]}`, options)
+        fetch(`https://api.themoviedb.org/3/movie/now_playing`, options)
             .then(res => res.json())
             .then(res => {
                 if (res && res.results && res.results.length > 0) {
