@@ -10,32 +10,36 @@ document.addEventListener('DOMContentLoaded', () => {
             Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIzZmI1OGVmNGRiZTRlN2NiNWEzMDBlZjM5ZGQyM2U5NyIsIm5iZiI6MTc0MDk4NzE1OS41MDcsInN1YiI6IjY3YzU1YjE3Y2NmYzc0OWFmMjkxZjFlMSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.24PT5gtAOL0SMXRf5hwCBZ8N01KLm4kvHlXz7J6UtSo'
         }
     };
-    fetch(`https://api.themoviedb.org/3/movie/${movieId}?append_to_response=details,credits`, options)
-        .then(response => response.json())  // Parse the JSON response
-        .then(data => {  // Use 'data' to store the response (parsed JSON)
-            console.log(data);  // Log the entire response to see its structure (optional)
-
+    fetch(`https://api.themoviedb.org/3/movie/${movieId}?append_to_response=details,credits,release_dates`, options)
+        .then(response => response.json())
+        .then(data => {
 
             function renderMovieDetails(movieDetails) {
                 const detailsSection = document.createElement("section");
-                const movieCoverCon = document.createElement("div");
 
+                const movieCoverCon = document.createElement("div");
                 const movieCover = document.createElement("img");
                 movieCover.src = `https://image.tmdb.org/t/p/w500${movieDetails.poster_path}`;
                 movieCover.alt = `${movieDetails.title} Cover`;
-
                 movieCover.classList.add("detailMovie-img");
-
                 movieCoverCon.classList.add("detailMovie-img-con");
-
                 detailsSection.appendChild(movieCover);
                 movieCoverCon.appendChild(movieCover);
                 detailsSection.appendChild(movieCoverCon);
 
+                const detailsTitle = document.createElement("h3");
+                detailsTitle.classList.add("details-title");
+                detailsTitle.setAttribute("id", "movie--title");
+                detailsTitle.textContent = movieDetails.title;
+                detailsSection.appendChild(detailsTitle);
 
+                const tagLine = document.createElement("quote");
+                const tagLineTxt = movieDetails.tagline;
+                tagLine.textContent = tagLineTxt;
+                detailsSection.appendChild(tagLine);
+                
                 const genresContainer = document.createElement("div");
                 genresContainer.classList.add("popular-genre");
-
                 movieDetails.genres.forEach(genre => {
                     const genreSpan = document.createElement("a");
                     genreSpan.classList.add("genre");
@@ -43,14 +47,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     genresContainer.appendChild(genreSpan);
                 });
                 detailsSection.appendChild(genresContainer);
-
-                const detailsContainer = document.createElement("div");
-                detailsContainer.classList.add("details-con");
-
-                const detailsTitle = document.createElement("h3");
-                detailsTitle.classList.add("details-title");
-                detailsTitle.textContent = movieDetails.title;
-                detailsContainer.appendChild(detailsTitle);
 
                 const runtime = movieDetails.runtime ? movieDetails.runtime : "N/A";
                 const hours = Math.floor(runtime / 60);
@@ -68,7 +64,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 runtimeValue.textContent = runtimeFormatted;
                 runtimeDiv.appendChild(runtimeTitle);
                 runtimeDiv.appendChild(runtimeValue);
-                detailsContainer.appendChild(runtimeDiv);
+                infoContainer.appendChild(runtimeDiv);
 
                 const languageDiv = document.createElement("div");
                 const languageTitle = document.createElement("p");
@@ -78,23 +74,20 @@ document.addEventListener('DOMContentLoaded', () => {
                 languageValue.textContent = getLanguageName(movieDetails.original_language);
                 languageDiv.appendChild(languageTitle);
                 languageDiv.appendChild(languageValue);
-                detailsContainer.appendChild(languageDiv);
+                infoContainer.appendChild(languageDiv);
 
                 const ratingDiv = document.createElement("div");
                 const ratingTitle = document.createElement("p");
                 ratingTitle.classList.add("details-info-title");
                 ratingTitle.textContent = "Rating";
-                const ratingValue = movieDetails.vote_average ? movieDetails.vote_average.toFixed(1) : "N/A";
                 const ratingValueElm = document.createElement("p");
-                ratingValueElm.textContent = ratingValue + " IMDb";
+                ratingValueElm.textContent = movieDetails.vote_average || "N/A";
                 ratingDiv.appendChild(ratingTitle);
                 ratingDiv.appendChild(ratingValueElm);
 
-                infoContainer.appendChild(runtimeDiv);
-                infoContainer.appendChild(languageDiv);
                 infoContainer.appendChild(ratingDiv);
 
-                detailsContainer.appendChild(infoContainer);
+                detailsSection.appendChild(infoContainer);
 
                 const descriptionTitle = document.createElement("h3");
                 descriptionTitle.classList.add("details-title");
@@ -102,13 +95,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 const descriptionPara = document.createElement("p");
                 descriptionPara.classList.add("details-overview");
                 descriptionPara.textContent = movieDetails.overview;
-                detailsContainer.appendChild(descriptionTitle);
-                detailsContainer.appendChild(descriptionPara);
-
-                detailsSection.appendChild(detailsContainer);
+                detailsSection.appendChild(descriptionTitle);
+                detailsSection.appendChild(descriptionPara);
 
                 return detailsSection;
             }
+
 
             function getLanguageName(languageCode) {
                 const languageMap = {
@@ -122,7 +114,14 @@ document.addEventListener('DOMContentLoaded', () => {
                     'pt': 'Portuguese',
                     'ru': 'Russian',
                     'zh': 'Chinese',
-                    'ta': 'Tamil'
+                    'ta': 'Tamil',
+                    'aa': 'Afar',
+                    'ab': 'Abkhazian',
+                    'af': 'Afrikaans',
+                    'ak': 'Akan',
+                    'sq': 'Albanian',
+                    'am': 'Amharic',
+                    'ar': 'Arabic'
                 };
                 return languageMap[languageCode] || languageCode.toUpperCase();
             }

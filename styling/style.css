@@ -45,6 +45,10 @@ body.dark-mode {
   color: white;
 }
 
+.dark-mode strong {
+  color: white;
+}
+
 a, li, button {
   text-decoration: none;
   color: black;
@@ -90,6 +94,11 @@ footer .icon-bookmark {
 
 #index-title {
   font-size: 16pt;
+}
+
+#movie--title {
+  font-size: 20pt;
+  font-weight: bold;
 }
 
 .popular-container {

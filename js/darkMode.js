@@ -14,7 +14,7 @@ function applyDarkMode() {
     if (savedDarkMode) {
         bodyElm.classList.add("dark-mode");
     }
-    var sectionElm = document.querySelectorAll('body');
+    var sectionElm = document.querySelectorAll('body', 'strong');
     sectionElm.forEach(function(section){
         section.classList.add("dark-mode");
     });

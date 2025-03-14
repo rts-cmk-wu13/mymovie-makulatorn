@@ -153,7 +153,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const minutes = runtime % 60;
         const runtimeFormatted = runtime !== "N/A" ? `${hours} hr ${minutes} m` : "N/A";
         pRuntime.textContent = runtimeFormatted;
-
+        
         detailsDiv.appendChild(h3);
         detailsDiv.appendChild(pRating);
         detailsDiv.appendChild(pGenres);
@@ -162,13 +162,13 @@ document.addEventListener('DOMContentLoaded', () => {
         divContainer.appendChild(link);
         divContainer.appendChild(detailsDiv);
         popularArticle.appendChild(divContainer);
-
+        
+        
         return popularArticle;
     }
+    const sentinel = make(["div", { className: "sentinel" }, ""]);
+    document.body.appendChild(sentinel)
 
-
-    const mikkel = make(["div", { className: "hog" }, "mmyellow"]);
-    document.body.appendChild(mikkel)
 
 });
 
